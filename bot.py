@@ -19,10 +19,6 @@ def welcome(message: Message):
 def match_interests(message: Message):
     bot.send_message(message.chat.id, "What are you interested in? (e.g., technology, art, business)")
 
-@bot.message_handler(func=lambda m: m.text)
-def interests_handler(message: Message):
-    handle_interests(bot, message)
-
 @bot.message_handler(func=lambda m: m.text == "💬 Feedback")
 def feedback(message: Message):
     bot.send_message(message.chat.id, "We'd love to hear your thoughts! Type your feedback:")
@@ -31,6 +27,10 @@ def feedback(message: Message):
 @bot.callback_query_handler(func=lambda call: call.data.startswith("roadmap"))
 def roadmap_callback(call: CallbackQuery):
     handle_roadmap(bot, call)
+
+@bot.message_handler(func=lambda m: m.text)
+def interests_handler(message: Message):
+    handle_interests(bot, message)
 
 if __name__ == "__main__":
     bot.polling()
